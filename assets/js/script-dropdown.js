@@ -13,7 +13,13 @@ function loadIngredients() {
 
         // Function to handle the response when the request is successful
         success: function(response) {
-            response.drinks.forEach(function(drink) {  // Iterate over each drink in the response
+
+             // Sort the drinks array alphabetically based on the ingredient name
+             var sortedDrinks = response.drinks.sort(function(a, b) {
+                return a.strIngredient1.localeCompare(b.strIngredient1);
+            });
+
+            sortedDrinks.forEach(function(drink) {  // Iterate over each drink in the response
 
                 // Append an option element to each of the select elements (ingredient1, ingredient2, ingredient3)
                 $('#ingredient1, #ingredient2, #ingredient3').append($('<option>', {
