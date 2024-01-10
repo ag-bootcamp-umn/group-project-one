@@ -6,4 +6,3 @@ $.ajax({
       console.log(response);
     },
   });
-  
