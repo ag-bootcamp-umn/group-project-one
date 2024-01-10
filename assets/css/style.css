@@ -2,3 +2,10 @@
     background-color:blueviolet;
     color:hotpink;
 }
+
+.displayDrink {
+    padding:10px;
+    marigin:10px;
+    border:10px;
+    border-color:black;
+}
