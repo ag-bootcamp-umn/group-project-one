@@ -11,6 +11,9 @@ $(document).ready(function () {
 
         // Clear the field
         $("#userName").val("");
+
+        // Optional: Display a success message
+        alert("User name saved successfully!");
     });
 });
 
