@@ -1,4 +1,4 @@
-const iForm = document.querySelector('#ingredients');
+const iForm = document.querySelector('#nameForm');
 const urlRoot = 'www.thecocktaildb.com/api/json/v1/1/filter.php?'
 
 iForm.addEventListener('submit', getCocktails);
@@ -6,28 +6,48 @@ iForm.addEventListener('submit', getCocktails);
 function getCocktails(e) {
     e.preventDefault();
 
-    const userName = document.querySelector('#userName').value;
-    const ingredient1 = document.querySelector('#ingredient1').value;
-    const ingredient2 = document.querySelector('#ingredient2').value;
-    const ingredient3 = document.querySelector('#ingredient3').value;
+    var ingredient1 = $('#ingredient1').val();
+    var ingredient2 = $('#ingredient2').val();
+    var ingredient3 = $('#ingredient3').val();
 
-    console.log(userName, ingredient1, ingredient2, ingredient3);
+    var requests = [];
 
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}&i=${ingredient2}&i=${ingredient3}`)
-        .then( function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            const drinks = data.drinks;
-        drinks.forEach( drink => {
-            const drName = drink.strDrink;
-            const drId = drink.idDrink;
-            const drThumb = drink.strDrinkThumb;
-            console.log(`
-            name: ${drName}
-            id: ${drId}
-            thumb: ${drThumb}
-            `)
-        });
-        })
+    if (ingredient1) {
+        requests.push($.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}`));
+    }
+    if (ingredient2) {
+        requests.push($.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient2}`));
+    }
+    if (ingredient3) {
+        requests.push($.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient3}`));
+    }
+
+    $.when(...requests).then(function(...responses) {
+        var results = responses.map(response => response[0].drinks);
+        var commonCocktails = findCommonCocktails(results);
+        displayCocktails(commonCocktails);
+    }, function() {
+        console.error('Error fetching cocktails');
+    });
 }
+
+function findCommonCocktails(results) {
+    // Logic to find common cocktails from the results
+    // This part will need more complex logic to compare and find common cocktails
+}
+
+function displayCocktails(cocktails) {
+    // Clear existing results
+    $('#results').empty();
+
+    // Display each cocktail in the results
+    $.each(cocktails, function(i, cocktail) {
+        $('#results').append(`<div>${cocktail.strDrink}</div>`);
+    });
+}
+
+// Ensure to bind the getCocktails function to the 'Generate Cocktails' button click event
+$(document).ready(function() {
+    loadIngredients();
+    $('#generateBtn').on('click', getCocktails);
+});
