@@ -13,9 +13,21 @@ function getCocktails(e) {
 
     console.log(userName, ingredient1, ingredient2, ingredient3);
 
-    fetch(`www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}&i=${ingredient2}&i=${ingredient3}`)
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}&i=${ingredient2}&i=${ingredient3}`)
         .then( function(response) {
-            console.log(response.json());
             return response.json();
+        })
+        .then(function(data) {
+            const drinks = data.drinks;
+        drinks.forEach( drink => {
+            const drName = drink.strDrink;
+            const drId = drink.idDrink;
+            const drThumb = drink.strDrinkThumb;
+            console.log(`
+            name: ${drName}
+            id: ${drId}
+            thumb: ${drThumb}
+            `)
+        });
         })
 }
