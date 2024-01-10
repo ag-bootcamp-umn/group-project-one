@@ -1,11 +1,14 @@
-# Cocktail Project
+# Project Cocktail
 
 ## UI
 - Title
 - Brief Instructions
 - 3 ingredients:
--- form with 3 dropdowns
+-- form with 3 dropdowns or buttons
+- 10 or 12 items (?)
+- pick 1 - 3
 - Input for name
+- Eye-catching animation via 3rd-party library
 
 ### submit form:
 - API call for cocktails matching those criteria
@@ -20,6 +23,8 @@
 - Accesses name and greets user.
 - API call for ingredients
 - Determination whether it is good or not
+- "Approval animation"
 
 ## local storage
 - name and cocktail(s)
+
