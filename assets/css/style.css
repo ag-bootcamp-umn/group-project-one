@@ -1,0 +1,10 @@
+.cocktailName {
+    background-color:blueviolet;
+    color:hotpink;
+}
+
+.displayDrink {
+    padding:10px;
+    margin:10px;
+    border:10px;
+}
