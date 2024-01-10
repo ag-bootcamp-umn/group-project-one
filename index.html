@@ -11,15 +11,16 @@
 
 
     <!-- Main container for content -->
+    <!-- mt-4 is bootstrap and adds (margin-top)-->
     <div class="container mt-4">
         <!-- Page title -->
         <h1 class="text-center">Cocktail Generator</h1>
-            <form id="nameForm">
-                <div class="form-group">
-                    <label for="userName">Enter Your Name:</label>
-                    <input type="text" class="form-control" id="userName" placeholder="Your Name">
+            <form id="nameForm"> 
+                <div class="form-group"> <!-- Bootstrap class for optimal spacing and alignment of form elements -->
+                    <label for="userName">Enter Your Name:</label> <!-- Label for the input field -->
+                    <input type="text" class="form-control" id="userName" placeholder="Your Name">   <!-- Text input field with Bootstrap styling -->
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button> <!-- Submit button for the form with Bootstrap button styling -->
             </form>
 
         <!-- Row for ingredient selectors -->
@@ -41,6 +42,12 @@
                 <label for="ingredient3">Ingredient 3:</label>
                 <select id="ingredient3" class="form-control"></select>
             </div>
+        </div>
+
+            <!-- Generate cocktail button -->
+        <button id="generateBtn" class="btn btn-primary">Generate Cocktails</button>
+        <div id="results" class="mt-4">
+            <!-- Results will be displayed here -->
         </div>
 
 
