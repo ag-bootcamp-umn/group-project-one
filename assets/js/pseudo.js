@@ -19,4 +19,11 @@ const finalDrinkArray = cocktails1.filter(item => {
 
 console.log(finalDrinkArray);
 
-// Display them
+// Display them: (the forEach loop in alexapi.js )
+// Extract it to a separate funciton
+
+// Store: {
+//     name
+//     drink
+//     recipe link
+// }
