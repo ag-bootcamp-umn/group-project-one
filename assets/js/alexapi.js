@@ -21,8 +21,33 @@ function getCocktails(e) {
       return res.json();
     })
     .then( data => {
-      const drinks = data.drinks;
+      const cocktails1 = data.drinks;
+
+  fetch(
+    `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient2}`
+  )
+    .then(res => {
+      return res.json();
+    })
+    .then( data => {
+      const cocktails2 = data.drinks;
+
+  fetch(
+    `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient3}`
+  )
+    .then(res => {
+      return res.json();
+    })
+    .then( data => {
+      const cocktails3 = data.drinks;
+
+      const finalDrinkArray = cocktails1.filter(item => {
+        return cocktails2.includes(item) && cocktails3.includes(item);
+      });
       
+      console.log(finalDrinkArray);
+      
+      return
       drinks.forEach((drink) => {
         const {strDrink, idDrink, strDrinkThumb} = drink;
 
