@@ -21,12 +21,15 @@ async function fetchData(url) {
   return data;
 }
 
-async function getCocktailData(url) {
-  const data = await fetchData(url);
-  finalDrinkArray.push(...data);
+async function getCocktailData(input) {
+  const data = await fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${input}`);
+  finalDrinkArray.push(data);
 } 
 
-const cocktail1 = getCocktailData(ingredient1)
+getCocktailData(ingredient1);
+getCocktailData(ingredient2);
+getCocktailData(ingredient3);
+console.log(finalDrinkArray);
   // fetch(
   //   `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}`
   // )
@@ -38,7 +41,6 @@ const cocktail1 = getCocktailData(ingredient1)
   //     // return cocktail1;
   //   });
   //   // displayDrinks(cocktail1);
-    console.log(cocktail1);
 }
 
 
