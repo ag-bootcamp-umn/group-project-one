@@ -18,7 +18,7 @@ async function getCocktails(e) {
 async function fetchData(url) {
   const res = await fetch(url);
   const jData = await res.json();
-  const data = jData.drinks;
+  const data = jData.drinks.strDrink;
   return data;
 }
 
