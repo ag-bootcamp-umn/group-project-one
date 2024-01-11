@@ -4,7 +4,7 @@ const urlRoot = "www.thecocktaildb.com/api/json/v1/1/filter.php?";
 
 mainForm.addEventListener("submit", getCocktails);
 
-function getCocktails(e) {
+async function getCocktails(e) {
   e.preventDefault();
 
   const userName = document.querySelector("#userName").value;
@@ -17,19 +17,34 @@ function getCocktails(e) {
 
 async function fetchData(url) {
   const res = await fetch(url);
-  const data = await res.json();
+  const jData = await res.json();
+  const data = jData.drinks;
   return data;
 }
 
 async function getCocktailData(input) {
   const data = await fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${input}`);
-  finalDrinkArray.push(data);
+  return data;
 } 
 
-getCocktailData(ingredient1);
-getCocktailData(ingredient2);
-getCocktailData(ingredient3);
-console.log(finalDrinkArray);
+async function compareCocktails() {
+  const cocktails1 = await getCocktailData(ingredient1);
+  const cocktails2 = await getCocktailData(ingredient2);
+  const cocktails3 = await getCocktailData(ingredient3);
+
+  console.log(cocktails1, cocktails2, cocktails3);
+  
+  const finalDrinkArray = cocktails1.filter(item => {
+    return cocktails2.includes(item) && cocktails3.includes(item);
+  });
+  
+  console.log(finalDrinkArray);
+}
+
+compareCocktails();
+
+
+// console.log(finalDrinkArray);
   // fetch(
   //   `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}`
   // )
