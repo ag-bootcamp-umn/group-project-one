@@ -17,48 +17,39 @@
         <div class='row navbar cocktailName d-flex 
         justify-content-center'>Hello userName!
         </div>
-        <div class='row'>
-            <div class='col'>
-                <!-- we'll change the text below to be dynamically updated in javascript to do 'Let's make a ' + drinkName + '! -->
-                <div class="row">
-                    <div class='md-2 text-center displayDrink'>Lets make a drink Name!</div>
-                </div>
-                <div class="row">
-                    <!-- we'll change the text below to be dynamically updated in javascript to do show the image of the drink -->
-                    <div class='col-md-2 offset-md-5 text-center displayDrinkImage'>Drink Image will populate here</div>
-                </div>
-                <div class="row">
-                    <!-- we'll change the text below to be dynamically updated in javascript to do show the images for approved or not approved -->
-                    <div class='col-md-2 offset-md-5 text-center displayApproval'>Approved or Not Approved Image Here</div>
-                </div>
-                <div class="row">
-                    <div class='col text-center'> 
-                        <button class="btn history">Past Drinks</button>
-                </div>
+        <div class="row justify-content-end">
+            <div class="cocktailCard col-12 col-md-6">
+
             </div>
+            <!-- <div class="col-12 col-md-6"></div> -->
         </div>
+    </div>
 
 
 
-        <!-- For HTML page to use Bootstrap that uses some Java with CSS-->
-        <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-            </script>
+                <!-- For HTML page to use Bootstrap that uses some Java with CSS-->
+                <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                    crossorigin="anonymous">
+                    </script>
 
-        <!-- Link JQuery third-party library -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <!-- Link JQuery third-party library -->
+                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-        <!-- Link the DayJS library -->
-        <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-            integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+                <!-- Link the DayJS library -->
+                <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+                    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
 
         <!-- Link JavaScript page that is in assets folder -->
-        <script src="./assets/js/script.js"></script>
-        <script src="./assets/js/script-final.js"></script>
-
-        <!-- Link the animation for the page -->
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-        <dotlottie-player src="https://lottie.host/cbbd5bde-4bd0-4e88-9a65-61d5e4bdec6e/6fs9Mouxnz.json" background="transparent" speed="1" style="position:absolute; bottom:100px; width: 500px; height: 500px;" loop autoplay></dotlottie-player>
+        <!-- <script src="./assets/js/script.js"></script> -->
+        <script src="./assets/js/final.js"></script>
+                <!-- Link the animation for the page -->
+                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+                    type="module"></script>
+                <dotlottie-player src="https://lottie.host/cbbd5bde-4bd0-4e88-9a65-61d5e4bdec6e/6fs9Mouxnz.json"
+                    background="transparent" speed="1"
+                    style="position:absolute; bottom:100px; width: 500px; height: 500px;" loop
+                    autoplay></dotlottie-player>
 </body>
 
 </html>
