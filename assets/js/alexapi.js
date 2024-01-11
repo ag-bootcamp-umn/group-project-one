@@ -15,13 +15,14 @@ function getCocktails(e) {
 //   storeUserInput(userName);
 
   fetch(
-    `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}&i=${ingredient2}&i=${ingredient3}`
+    `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}`
   )
     .then(res => {
       return res.json();
     })
     .then( data => {
       const drinks = data.drinks;
+      
       drinks.forEach((drink) => {
         const {strDrink, idDrink, strDrinkThumb} = drink;
 
