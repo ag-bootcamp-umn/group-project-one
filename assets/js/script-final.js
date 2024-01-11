@@ -37,33 +37,6 @@ function displayCocktail(drinkId) {
           }
         })
         return
-    $.ajax({
-        url: ingURL,
-        success: function (res) {
-            const cocktail = res.drinks[0];
-            const {strDrink, strDrinkThumb, strInstructions,} = cocktail;
-
-            cocktailCard.innerHTML = `
-            <div class="card">
-            <img src="${strDrinkThumb}" class="card-img-top" alt="${strDrink}">
-            <div class="card-body">
-              <h5 class="card-title">${strDrink}</h5>
-              <p class="card-text">${strInstructions}</p>
-              
-            </div>
-            <ul class="ingredientsList list-group list-group-flush">
-            <li class="list-group-item"><h6>Ingredients:</h6></li>
-            </ul>
-          </div>`;
-
-          for (let key in cocktail) {
-            if(key.includes('Ingredient') && cocktail[key]) {
-                $('.ingredientsList').append(`<li class="list-group-item">${cocktail[key]}</li>`)
-            }
-          }
-          
-        }
-    })
 }
 
 userNamePlace.textContent = `Welcome, ${userName}!`;
