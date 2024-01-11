@@ -6,6 +6,29 @@ const userName = paramArray[1].split('=').pop();
 const userNamePlace = document.querySelector('.cocktailName');
 const cocktailCard = document.querySelector('.cocktailCard');
 
+
+// Get 3 inputs: 3 Ingredients
+
+// API fetch each separately
+// Store those in variables: arrays of cocktails
+// EG:  ingr1 = [ 'x', 'y', 'z']
+
+// Compare the 3 arrays to find matches
+// * cocktails appearing in all 3 arrays
+
+// return new array with only those matches
+const cocktails1 = ["a", "b", "c", "d"];
+const cocktails2 = ["a", "c", "d", "e"];
+const cocktails3 = ["a", "c", "d"];
+
+const finalDrinkArray = cocktails1.filter(item => {
+  return cocktails2.includes(item) && cocktails3.includes(item);
+});
+
+console.log(finalDrinkArray);
+
+// Display them
+
 function displayCocktail(drinkId) {
     const ingURL = `https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`;
 
@@ -42,6 +65,27 @@ function displayCocktail(drinkId) {
 userNamePlace.textContent = `Welcome, ${userName}!`;
 
 displayCocktail(idDrink);
+
+$(document).ready(function () {
+    // Listen for the click event on the submit button
+    $("#nameForm").submit(function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Get the name e
+        var userName = $("#userName").val();
+
+        // Store the name
+        localStorage.setItem("userName", userName);
+
+        // Clear the field
+        $("#userName").val("");
+
+        // Optional: Display a success message
+        alert("User name saved successfully!");
+    });
+});
+
+
 
 // Wait until the DOM is fully loaded before running the code inside
 $(document).ready(function () {
