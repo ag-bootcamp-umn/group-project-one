@@ -3,7 +3,7 @@
 
 // API fetch each separately
 // Store those in variables: arrays of cocktails
-// EG:  ingr1 = [ 'x', 'y', 'z']
+// EG:  cocktails1 = [ 'x', 'y', 'z']
 
 // Compare the 3 arrays to find matches
 // * cocktails appearing in all 3 arrays
