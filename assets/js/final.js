@@ -34,6 +34,10 @@ function displayCocktail(drinkId, location) {
               <p class="card-text">${strInstructions}</p>
               
             </div>
+            <div class="cocktail-buttons card-body">
+              <button class="save-drink btn btn-success">Save your cocktail</button>
+              <button class="see-favs btn btn-success">See favourites</button>
+        </div>
             <ul class="ingredientsList list-group list-group-flush">
             <li class="list-group-item"><h6>Ingredients:</h6></li>
             </ul>
@@ -46,8 +50,20 @@ function displayCocktail(drinkId, location) {
                 $('.ingredientsList').append(`<li class="list-group-item">${cocktail[key]}</li>`)
             }
           }
+
+          document.querySelector('.cocktail-buttons').addEventListener('click', function(e) {
+            if (e.target.matches('.save-drink')) saveDrink();
+            if (e.target.matches('.see-favs')) seeFavs();
+          });
         })
         return;
 }
 
 displayCocktail(idDrink, cocktailCard);
+
+function saveDrink() {
+  console.log('Drink Saved!');
+}
+function seeFavs() {
+  console.log('Favs Seen!');
+}
