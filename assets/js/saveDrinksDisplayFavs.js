@@ -5,12 +5,12 @@
 // pull the drinkID
 // display  userName, drinkID, drinkImage, drinkLink 
 
-function storeDisplayDrink() {
+function displayDrink() {
 // Store the variables in localStorage
-localStorage.setItem('userNames', JSON.stringify(userNames));
-localStorage.setItem('drinkIDs', JSON.stringify(drinkIDs));
-localStorage.setItem('drinkImages', JSON.stringify(drinkImages));
-localStorage.setItem('drinkLinks', JSON.stringify(drinkLinks));
+// localStorage.setItem('userNames', JSON.stringify(userNames));
+// localStorage.setItem('drinkIDs', JSON.stringify(drinkIDs));
+// localStorage.setItem('drinkImages', JSON.stringify(drinkImages));
+// localStorage.setItem('drinkLinks', JSON.stringify(drinkLinks));
 
 // Retrieve the stored values from localStorage
 var storedUserNames = JSON.parse(localStorage.getItem('userNames')) || [];
