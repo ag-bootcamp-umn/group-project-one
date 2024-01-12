@@ -110,6 +110,6 @@ function displayCocktails(cocktails, userName) {
 // Set the inner HTML of the 'searchResults' element and attach a click event listener to buttons with class 'drinkButton'
     $('#searchResults').html(htmlContent).on('click', '.drinkButton', function() {
         console.log(this.value);
-        location.assign(`./finalalt.html?q=${this.value}&name=${userName}`);
+        window.open(`./final.html?q=${this.value}&name=${userName}`);
     });
 }
