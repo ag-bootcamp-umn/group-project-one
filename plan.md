@@ -30,3 +30,22 @@
 
 
 # TODO
+
+- Link Daniel's code to index.html
+    - Dan
+- Save results to local storage
+    - Button to save
+    - {name, strDrink, idDrink,}
+    - Meredith
+- Logic to determine photo to display
+    - Austin
+- Styling
+    - Austin
+- Comments in final.js
+    - Alex
+- Function name for Meredith
+    - Alex
+
+## Stitch together
+- Dan
+- Jon

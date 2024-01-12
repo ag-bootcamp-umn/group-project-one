@@ -1,10 +1,12 @@
+
+// 
 const mainForm = document.querySelector("#mainForm");
 const searchResults = document.querySelector("#searchResults");
-const urlRoot = "www.thecocktaildb.com/api/json/v1/1/filter.php?";
+// const urlRoot = "www.thecocktaildb.com/api/json/v1/1/filter.php?";
 
 mainForm.addEventListener("submit", getCocktails);
 
-function getCocktails(e) {
+async function getCocktails(e) {
   e.preventDefault();
 
   const userName = document.querySelector("#userName").value;
@@ -12,49 +14,49 @@ function getCocktails(e) {
   const ingredient2 = document.querySelector("#ingredient2").value;
   const ingredient3 = document.querySelector("#ingredient3").value;
 
-  const finalDrinkArray = [];
-//   storeUserInput(userName);
+  async function fetchData(url) {
+    const res = await fetch(url);
+    const jData = await res.json();
+    const data = jData.drinks;
+    return data;
+  }
 
-async function fetchData(url) {
-  const res = await fetch(url);
-  const data = await res.json();
-  return data;
-}
+  async function getCocktailData(input) {
+    const data = await fetchData(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${input}`
+    );
+    return data;
+  }
 
-async function getCocktailData(input) {
-  const data = await fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${input}`);
-  finalDrinkArray.push(data);
-} 
+  async function compareCocktails() {
+    const cocktails1 = await getCocktailData(ingredient1);
+    const cocktails2 = await getCocktailData(ingredient2);
+    const cocktails3 = await getCocktailData(ingredient3);
 
-getCocktailData(ingredient1);
-getCocktailData(ingredient2);
-getCocktailData(ingredient3);
-console.log(finalDrinkArray);
-  // fetch(
-  //   `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient1}`
-  // )
-  //   .then(res => {
-  //     return res.json();
-  //   })
-  //   .then( data => {
-  //     cocktail1 = data.drinks;
-  //     // return cocktail1;
-  //   });
-  //   // displayDrinks(cocktail1);
-}
+    const totalArray = [...cocktails1, ...cocktails2, ...cocktails3];
+    console.log("total", totalArray);
 
+    let cocktailCounter = totalArray.reduce( (acc, {idDrink}) => {
+      return ( acc[idDrink] ? ++acc[idDrink] : (acc[idDrink] = 1), acc);
+    }, {});
 
-function storeUserInput(userName) {
-    let drinksData = JSON.parse(localStorage.getItem('drinksData') || '[]');
-    const userData = [{userName}];
-    console.log(userData);
-}
+    console.log(cocktailCounter);     
 
-function displayDrinks(drinks) {
-  drinks.forEach((drink) => {
-    const {strDrink, idDrink, strDrinkThumb} = drink;
-  
-    searchResults.innerHTML += `
+    const totalUniq = [
+      ...totalArray.filter(({idDrink}) => cocktailCounter[idDrink] == 3)
+        .reduce((map, obj) => map.set(obj.idDrink, obj), new Map())
+        .values(),
+    ];
+    console.log('totalUniq', totalUniq);
+
+    totalUniq.forEach((drink) => {
+      displayDrink(drink);
+    });
+
+    function displayDrink(drink) {
+      const { strDrink, idDrink, strDrinkThumb } = drink;
+
+      searchResults.innerHTML += `
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <div class="card">
             <img src="${strDrinkThumb}" class="card-img-top" alt="${strDrink}">
@@ -64,12 +66,22 @@ function displayDrinks(drinks) {
             </div>
         </div>
     </div>`;
-  
-    searchResults.addEventListener('click', function(e) {
-        if (e.target.matches('.drinkButton')) {
-            console.log(e.target.value);
-            location.assign(`./finalalt.html?q=${e.target.value}&name=${userName}`);
-        } 
-    });
-  });
+
+      searchResults.addEventListener("click", function (e) {
+        if (e.target.matches(".drinkButton")) {
+          console.log(e.target.value);
+          location.assign(`./final.html?q=${e.target.value}&name=${userName}`);
+        }
+      });
+      
+    }
+  }
+
+  compareCocktails();
+}
+
+function storeUserInput(userName) {
+  let drinksData = JSON.parse(localStorage.getItem("drinksData") || "[]");
+  const userData = [{ userName }];
+  console.log(userData);
 }
