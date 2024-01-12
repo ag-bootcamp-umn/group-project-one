@@ -9,6 +9,16 @@ const userName = paramArray[1].split('=').pop();
 const userNamePlace = document.querySelector('.cocktailName');
 const cocktailCard = document.querySelector('.cocktailCard');
 
+function approval(){
+  if ($('#list').text() === 'Tequila') {
+    console.log('yes')
+    $('.ingredientsList').append(`<img src = "images/approved.png";>`)
+  } else {
+    console.log('no')
+    $('.ingredientsList').append(`<img src = "images/dizzy.png";>`)
+  }
+}
+
 // To display the results from the selected cocktail
 function displayCocktail(drinkId, location) {
 
@@ -50,7 +60,7 @@ function displayCocktail(drinkId, location) {
                 $('.ingredientsList').append(`<li class="list-group-item">${cocktail[key]}</li>`)
             }
           }
-
+          approval()
           document.querySelector('.cocktail-buttons').addEventListener('click', function(e) {
             if (e.target.matches('.save-drink')) saveDrink();
             if (e.target.matches('.see-favs')) seeFavs();
