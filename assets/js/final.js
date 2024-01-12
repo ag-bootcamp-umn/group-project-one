@@ -10,7 +10,7 @@ const userNamePlace = document.querySelector('.cocktailName');
 const cocktailCard = document.querySelector('.cocktailCard');
 
 // To display the results from the selected cocktail
-function displayCocktail(drinkId) {
+function displayCocktail(drinkId, location) {
 
   // Displaying the name of the User at the top of the page
   userNamePlace.textContent = `Welcome, ${userName}!`;
@@ -26,7 +26,7 @@ function displayCocktail(drinkId) {
             const {strDrink, strDrinkThumb, strInstructions,} = cocktail;
 
             // Creating and adding a new HTML element based on the data extracted above
-            cocktailCard.innerHTML = `
+            location.innerHTML = `
             <div class="card">
             <img src="${strDrinkThumb}" class="card-img-top" alt="${strDrink}">
             <div class="card-body">
@@ -50,4 +50,4 @@ function displayCocktail(drinkId) {
         return;
 }
 
-displayCocktail(idDrink);
+displayCocktail(idDrink, cocktailCard);
