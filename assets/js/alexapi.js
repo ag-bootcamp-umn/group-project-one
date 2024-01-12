@@ -9,15 +9,10 @@ mainForm.addEventListener("submit", getCocktails);
 async function getCocktails(e) {
   e.preventDefault();
 
-  // const userName = document.querySelector("#userName").value;
+  const userName = document.querySelector("#userName").value;
   const ingredient1 = document.querySelector("#ingredient1").value;
   const ingredient2 = document.querySelector("#ingredient2").value;
   const ingredient3 = document.querySelector("#ingredient3").value;
-  const userName = 'Doug';
-  // const ingredient1 = 'Tequila';
-  // const ingredient2 = 'Triple sec';
-  // const ingredient3 = 'Lime juice';
-  ////////////////////////////////////////////////////////////////////
 
   async function fetchData(url) {
     const res = await fetch(url);
