@@ -67,3 +67,14 @@ function saveDrink() {
 function seeFavs() {
   console.log('Favs Seen!');
 }
+
+function changeImage() {
+  var image = document.getElementById("base");
+  if ($('#list').text() === 'Tequila') {
+    image.src = "images/approved.png";
+  } else {
+    image.src = "images/dizzy.png";
+  }
+}
+
+changeImage("base")
