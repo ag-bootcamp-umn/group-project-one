@@ -57,7 +57,7 @@ function displayCocktail(drinkId, location) {
           // Using a for-in loop because ingredients lists vary between different cocktails
           for (let key in cocktail) {
             if(key.includes('Ingredient') && cocktail[key]) {
-                $('.ingredientsList').append(`<li ID="LIST" class="list-group-item">${cocktail[key]}</li>`)
+                $('.ingredientsList').append(`<li id="list" class="list-group-item">${cocktail[key]}</li>`)
             }
           }
           approval()
@@ -77,14 +77,3 @@ function saveDrink() {
 function seeFavs() {
   console.log('Favs Seen!');
 }
-
-function changeImage() {
-  var image = document.getElementById("base");
-  if ($('#list').text() === 'Tequila') {
-    image.src = "images/approved.png";
-  } else {
-    image.src = "images/dizzy.png";
-  }
-}
-
-changeImage("base")
