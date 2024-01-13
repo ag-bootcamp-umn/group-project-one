@@ -1,22 +1,23 @@
 // pull the drinkID
 
 
-// display  userName, drinkID, drinkImage, drinkLink 
+// display  userName, drinkID, drinkImage, drinkLink  by pulling them from an array of objects called "favorites" that will be in local storage
 function displayFavDrinks() {
 var favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
+// example of what the array will have in it in order to build the function with the variables we are using
 [
     {
-        username: 'Katy',
-        drinkId: 1,
-        image: '...',
-        link: '...'
+        userName: 'Katy',
+        idDrink: 1,
+        strDrinkThumb: 'link to picture',
+        strLink: 'link to recipe'
     },
     {
-        username: 'Dizzy',
-        drinkId: 2,
-        image: '...',
-        link: '...'
+        userName: 'Dizzy',
+        idDrink: 2,
+        strDrink: 'Margarita',
+        strDrinkThumb: 'link to picture',
     },
 ]
     // Check if there are stored favorites
@@ -32,19 +33,19 @@ var favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         favoriteDiv.classList.add('favorite');
 
         var userNameP = document.createElement('p');
-        userNameP.textContent = 'User Name: ' + favorites[i].username;
+        userNameP.textContent = 'User Name: ' + favorites[i].userName;
 
-        var drinkIDP = document.createElement('p');
-        drinkIDP.textContent = 'Drink ID: ' + favorites[i].drinkId;
+        // var drinkIDP = document.createElement('p');
+        // drinkIDP.textContent = 'Drink ID: ' + favorites[i].idDrink;
 
         var drinkImage = document.createElement('img');
-        drinkImage.src = favorites[i].image;
+        drinkImage.src = favorites[i].strDrinkThumb;
         drinkImage.alt = 'Drink Image';
 
-        var drinkLink = document.createElement('a');
-        drinkLink.href = favorites[i].link;
+        var drinkName = document.createElement('a');
+        drinkLink.href = favorites[i].strDrink;
         drinkLink.target = '_blank';
-        drinkLink.textContent = 'Drink Link';
+        drinkLink.textContent = 'Name: ';
 
         favoriteDiv.appendChild(userNameP);
         favoriteDiv.appendChild(drinkIDP);
