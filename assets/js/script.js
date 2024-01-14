@@ -1,30 +1,26 @@
 
+// GETTING STARTED
 
+// Pull down localStorage data (if it exists)
+const projectCocktailData = JSON.parse(localStorage.getItem('projectCocktail') || {});
 
-$(document).ready(function () {
-    // Listen for the click event on the submit button
-    $("#nameForm").submit(function (event) {
-        event.preventDefault(); // Prevent the default form submission behavior
-
-        // Get the name e
-        var userName = $("#userName").val();
-
-        // Store the name
-        localStorage.setItem("userName", userName);
-
-        // Clear the field
-        $("#userName").val("");
-
-        // Optional: Display a success message
-        alert("User name saved successfully!");
-    });
-});
-
-
+// Create new SSOT and populate it will saved favorites
+const projectCocktail = {
+  favorites: projectCocktailData.favorites,
+  thisSession: {
+    userName: '',
+    cocktail: {}
+  },
+  temp : {
+    filteredCocktails: {},
+          sortedDrinks: {}
+  },
+}
 
 // Wait until the DOM is fully loaded before running the code inside
 $(document).ready(function () {
     loadIngredients(); // Call the loadIngredients function once the DOM is ready
+    $('#mainForm').on('submit', getCocktails);
   });
   
   function loadIngredients() {
@@ -40,7 +36,7 @@ $(document).ready(function () {
               // In this case the sort method is called on the 'response.drinks' array. 
               // This method sorts the elements of an array based on the provided comparison function.
               // The comparison function takes two parameters (a, b) which represent any two elements from the array that are being compared during the sorting process.
-        var sortedDrinks = response.drinks.sort(function (a, b) {
+              projectCocktail.temp.sortedDrinks = response.drinks.sort(function (a, b) {
           // 'localeCompare' is a string method that compares two strings (here, ingredient names) and returns a number indicating their relative order.
               // If it returns a negative number, a is sorted before b.
               // If it returns a positive number, a is sorted after b.
@@ -51,7 +47,7 @@ $(document).ready(function () {
         });
   
         // Iterate over each drink in the response
-        sortedDrinks.forEach(function (drink) {
+        projectCocktail.temp.sortedDrinks.forEach(function (drink) {
           // Append an option element to each of the select elements (ingredient1, ingredient2, ingredient3)
           $("#ingredient1, #ingredient2, #ingredient3").append(
             $("<option>", {
@@ -68,100 +64,132 @@ $(document).ready(function () {
     });
   }
   
+  function getCocktails(e) {
+    e.preventDefault();
+    // Retrieve values from the input fields and store them in variables
+    // jQuerys val() method is used to get the values of form elements.
+    var userName = $('#userName').val();
+    var ingredient1 = $('#ingredient1').val();
+    var ingredient2 = $('#ingredient2').val();
+    var ingredient3 = $('#ingredient3').val();
 
+    // Combine the ingredients into an array and filter out any empty values
+    var ingredients = [ingredient1, ingredient2, ingredient3].filter(Boolean);
 
-// let drinkId = 11007;
-// ingURL = `https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`;
+    // Initialize an object to keep track of all cocktails and a counter for the number of completed fetches
+    // 'allCocktails' will be used to store information about each cocktail you fetch from the API.
+    // Think of 'allCocktails' as a big box where you're going to put each cocktail you find. 
+    // Each cocktail will have its own spot in this box, identified by its unique ID (like a name tag). 
+    // This way, you can easily find and count how many times each cocktail appears in your search results.
+    var allCocktails = {};
 
-// $.ajax({
-//   url: ingURL,
-//   success: function (response) {
-//     let drinkArray = response.drinks[0];
-//     let drinkName = drinkArray.strDrink;
-//     console.log(drinkName);
-//     const ingredients = [];
-//     const recipe = [];
-//     const drinkPhoto = drinkArray.strDrinkThumb
-//     console.log(drinkPhoto)
-//     // get name of drink, ingredients, recipe, and photo
+    // This line is creating a variable named fetchCount and setting its initial value to 0. This variable will be used as a counter.
+    // The purpose of 'fetchCount' is to keep track of how many API requests (fetches) you have completed. 
+    // When all these requests are done (up to three) you can then process all the collected data.
+    // When the counter shows the same number as the total number of ingredients you asked about, you know you're done collecting data and can move on to the next step.
+    var fetchCount = 0;
 
-//     // create function to get ingredients from drinkArray
-//     function getIngredients() {
-//       for (let i = 1; i <= 15; i++) {
-//         const ingredientKey = `strIngredient${i}`;
+    // Iterate over each ingredient
+    ingredients.forEach(function(ingredient) {
+        // Perform an Jquery AJAX request for each ingredient
+        $.ajax({
+            url: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // If data is returned from the API
+                if (data.drinks) {
+                    // 'data.drinks' will be an array of drink objects, where each object contains information about a specific cocktail.
+                    data.drinks.forEach(function(drink) {
+                        // Check if the current drink is already in our allCocktails object
+                        if (allCocktails[drink.idDrink]) {
+                            // If the drink is already in the object, increment its count by 1.
+                            // This count helps us track how many ingredients returned this particular drink.
+                            allCocktails[drink.idDrink].count++;
+                        } else {
+                            // If the drink is not in the object, add it with a count of 1.
+                            // We use the spread operator(...) to copy all properties of the drink object.
+                            // We also add a new property 'count' set to 1, indicating this is the first occurrence of this drink.
+                            allCocktails[drink.idDrink] = { ...drink, count: 1 };
+                        }
+                    });
+                }
+            },
+            error: function() {
+                // If there's an error in fetching data, display an error message in the 'searchResults' element
+                $('#searchResults').append(`<p>Error fetching cocktail data for ${ingredient}. Please try again.</p>`);
+            },
+            complete: function() {
+                // Increment the fetch counter after each AJAX call is completed
+                fetchCount++;
+                // If all AJAX calls have been completed
+                // This compares the fetchCount (number of completed AJAX requests) to the length of the ingredients array.
+                // If the number of completed requests equals the number of ingredients, it means all ingredient data has been fetched.
+                if (fetchCount === ingredients.length) {
+                     
+                    // This line is creating a new array, 'filteredCocktails', containing only the drinks that match a specific criteria.
+                    // 'Object.values(allCocktails)' converts the allCocktails object into an array of its values (the cocktail data).
+                    // The filter method is used to keep only those drinks that appear in all ingredient results.
+                    // It checks if the count property of each drink equals the number of ingredients.
+                    projectCocktail.temp.filteredCocktails = Object.values(allCocktails).filter(drink => 
+                        
+                        // This count property was incremented each time the drink was found in the results of an ingredient.
+                        // So, if 'count' equals the length of the ingredients array, it means this drink was found in every ingredient search.
+                        drink.count === ingredients.length);
+                      
+                    // ADD relecant information to the global variable:
+                    projectCocktail.thisSession.userName = userName;
+                    // Display the filtered cocktails!! (hopefully)
+                    displayCocktails(projectCocktail.temp.filteredCocktails, userName);
+                }
+            }
+        });
+    });
+}
+// Function to display the cocktails
+function displayCocktails(cocktails, userName) {
+  
 
-//         // Check if ingredient key exists and is not null
-//         if (drinkArray[ingredientKey]) {
-//           ingredients.push(drinkArray[ingredientKey]);
-//         }
-//       }
-//     }
-//     // create function to get recipe
-//     function getRecipe() {
-//       for (let i = 1; i <= 30; i++) {
-//         const measureKey = `strMeasure${i}`;
+    // initialize a variable to hold the HTML content
+    var htmlContent = '';
+    // Check if there are no cocktails
+    if (cocktails.length === 0) {
+        // Display a message to the user if no cocktails are found
+        htmlContent = '<p>No cocktails found that match the selected ingredients.</p>';
 
-//         if (drinkArray[measureKey]) {
-//           recipe.push(drinkArray[measureKey]);
-//         }
-//       }
-//     }
-//     getIngredients();
-//     getRecipe();
-//     console.log(ingredients, recipe);
-//   },
-// });
+    // Iterate over each cocktail and build the HTML content
+    } else {
+        cocktails.forEach(function(drink) {
+            var { strDrink, idDrink, strDrinkThumb } = drink;
+            htmlContent += `
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card">
+                        <img src="${strDrinkThumb}" class="card-img-top" alt="${strDrink}">
+                        <div class="card-body">
+                            <h5 class="card-title">${strDrink}</h5>
+                            <button value="${idDrink}" class="drinkButton btn btn-warning">Select this drink</button>
+                        </div>
+                    </div>
+                </div>`;
+        });
+    }
+// Set the inner HTML of the 'searchResults' element and attach a click event listener to buttons with class 'drinkButton'
+    $('#searchResults').html(htmlContent).on('click', '.drinkButton', function() {
+      $('#ingredient1').val('');
+      $('#ingredient2').val('');
+      $('#ingredient3').val('');
+      $('#userName').val('');
+      $('#searchResults').html('')
+        projectCocktail.thisSession.cocktail.idDrink = this.value;
 
-// {
-//   "idDrink": "11007",
-//   "strDrink": "Margarita",
-//   "strDrinkAlternate": null,
-//   "strTags": "IBA,ContemporaryClassic",
-//   "strVideo": null,
-//   "strCategory": "Ordinary Drink",
-//   "strIBA": "Contemporary Classics",
-//   "strAlcoholic": "Alcoholic",
-//   "strGlass": "Cocktail glass",
-//   "strInstructions": "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass.",
-//   "strInstructionsES": null,
-//   "strInstructionsDE": "Reiben Sie den Rand des Glases mit der Limettenscheibe, damit das Salz daran haftet. Achten Sie darauf, dass nur der äußere Rand angefeuchtet wird und streuen Sie das Salz darauf. Das Salz sollte sich auf den Lippen des Genießers befinden und niemals in den Cocktail einmischen. Die anderen Zutaten mit Eis schütteln und vorsichtig in das Glas geben.",
-//   "strInstructionsFR": null,
-//   "strInstructionsIT": "Strofina il bordo del bicchiere con la fetta di lime per far aderire il sale.\r\nAvere cura di inumidire solo il bordo esterno e cospargere di sale.\r\nIl sale dovrebbe presentarsi alle labbra del bevitore e non mescolarsi mai al cocktail.\r\nShakerare gli altri ingredienti con ghiaccio, quindi versarli delicatamente nel bicchiere.",
-//   "strInstructionsZH-HANS": null,
-//   "strInstructionsZH-HANT": null,
-//   "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg",
-//   "strIngredient1": "Tequila",
-//   "strIngredient2": "Triple sec",
-//   "strIngredient3": "Lime juice",
-//   "strIngredient4": "Salt",
-//   "strIngredient5": null,
-//   "strIngredient6": null,
-//   "strIngredient7": null,
-//   "strIngredient8": null,
-//   "strIngredient9": null,
-//   "strIngredient10": null,
-//   "strIngredient11": null,
-//   "strIngredient12": null,
-//   "strIngredient13": null,
-//   "strIngredient14": null,
-//   "strIngredient15": null,
-//   "strMeasure1": "1 1/2 oz ",
-//   "strMeasure2": "1/2 oz ",
-//   "strMeasure3": "1 oz ",
-//   "strMeasure4": null,
-//   "strMeasure5": null,
-//   "strMeasure6": null,
-//   "strMeasure7": null,
-//   "strMeasure8": null,
-//   "strMeasure9": null,
-//   "strMeasure10": null,
-//   "strMeasure11": null,
-//   "strMeasure12": null,
-//   "strMeasure13": null,
-//   "strMeasure14": null,
-//   "strMeasure15": null,
-//   "strImageSource": "https://commons.wikimedia.org/wiki/File:Klassiche_Margarita.jpg",
-//   "strImageAttribution": "Cocktailmarler",
-//   "strCreativeCommonsConfirmed": "Yes",
-//   "dateModified": "2015-08-18 14:42:59"
-// }
+        // Delete the arrays of data we used to create the UI on this page,
+        // Then save the updated projectCoctail to local storage
+        // At this point, the SSOT consists of 1) a list of favorites; 2) a 'thisSession' object with the userName, and 3) a nested object 'cocktail' containing the id number of the selected cocktail. This will be passed into an API call on the next page
+        projectCocktail.temp = {
+          filteredCocktails: {},
+          sortedDrinks: {}
+        };
+        localStorage.setItem('projectCocktail', JSON.stringify(projectCocktail));
+        window.open(`./final.html`);
+    });
+}

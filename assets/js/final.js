@@ -1,9 +1,10 @@
 // LOGIC FOR DISPLAYING THE FINAL PAGE
 
 // Getting the API search parameters
-const paramArray = document.location.search.split('&');
-const idDrink = paramArray[0].split('=').pop();
-const userName = paramArray[1].split('=').pop();
+const projectCocktail = JSON.parse(localStorage.getItem('projectCocktail'));
+const newFunc = projectCocktail.clearTemp;
+const {userName, cocktail} = projectCocktail.thisSession;
+
 
 // Query Selectors for DOM elements to manipulate
 const userNamePlace = document.querySelector('.cocktailName');
@@ -32,16 +33,18 @@ function displayCocktail(drinkId, location) {
         })
         .then( data => {
           // Extracting the data, destructuring it into the relevant parts
-            const cocktail = data.drinks[0];
-            const {strDrink, strDrinkThumb, strInstructions,} = cocktail;
+            const cocktailData = data.drinks[0];
+            console.log(data);
+
+            ({strDrink: cocktail.strDrink, strDrinkThumb: cocktail.strDrinkThumb, strInstructions: cocktail.strInstructions,} = cocktailData);
 
             // Creating and adding a new HTML element based on the data extracted above
             location.innerHTML = `
             <div class="card">
-            <img src="${strDrinkThumb}" class="card-img-top" alt="${strDrink}">
+            <img src="${cocktail.strDrinkThumb}" class="card-img-top" alt="${cocktail.strDrink}">
             <div class="card-body">
-              <h5 class="card-title">${strDrink}</h5>
-              <p class="card-text">${strInstructions}</p>
+              <h5 class="card-title">${cocktail.strDrink}</h5>
+              <p class="card-text">${cocktail.strInstructions}</p>
               
             </div>
             <div class="cocktail-buttons card-body">
@@ -55,9 +58,9 @@ function displayCocktail(drinkId, location) {
 
           // Appending <li> elements for ingredients.
           // Using a for-in loop because ingredients lists vary between different cocktails
-          for (let key in cocktail) {
-            if(key.includes('Ingredient') && cocktail[key]) {
-                $('.ingredientsList').append(`<li class="list-group-item">${cocktail[key]}</li>`)
+          for (let key in cocktailData) {
+            if(key.includes('Ingredient') && cocktailData[key]) {
+                $('.ingredientsList').append(`<li class="list-group-item">${cocktailData[key]}</li>`)
             }
           }
           approval()
@@ -69,10 +72,12 @@ function displayCocktail(drinkId, location) {
         return;
 }
 
-displayCocktail(idDrink, cocktailCard);
+displayCocktail(cocktail.idDrink, cocktailCard);
 
 function saveDrink() {
   console.log('Drink Saved!');
+  projectCocktail.favorites.push(projectCocktail.thisSession);
+  localStorage.setItem('projectCocktail', JSON.stringify(projectCocktail));
 }
 function seeFavs() {
   console.log('Favs Seen!');
