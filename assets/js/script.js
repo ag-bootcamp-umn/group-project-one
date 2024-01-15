@@ -2,7 +2,7 @@
 // GETTING STARTED
 
 // Pull down localStorage data (if it exists)
-const projectCocktailData = JSON.parse(localStorage.getItem('projectCocktail') || {});
+const projectCocktailData = JSON.parse(localStorage.getItem('projectCocktail')) || {};
 
 // Create new SSOT and populate it will saved favorites
 const projectCocktail = {
