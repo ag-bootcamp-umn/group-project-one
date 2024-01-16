@@ -60,7 +60,7 @@ function displayCocktail(drinkId, location) {
           // Using a for-in loop because ingredients lists vary between different cocktails
           for (let key in cocktailData) {
             if(key.includes('Ingredient') && cocktailData[key]) {
-                $('.ingredientsList').append(`<li class="list-group-item">${cocktailData[key]}</li>`)
+                $('.ingredientsList').append(`<li id ='list' class="list-group-item">${cocktailData[key]}</li>`)
             }
           }
           approval()
