@@ -18,7 +18,7 @@ function approval() {
   } else {
     console.log("no");
     $(".approval-img").append(`<img src = "images/dizzy.png";>`);
-    $(".approval-text").append(`<h4>Dizzy is happy - no tequila for Gery!</h4>`);
+    $(".approval-text").append(`<h4>Dizzy is happy - no tequila for Gary!</h4>`);
   }
 }
 
