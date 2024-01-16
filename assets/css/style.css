@@ -1,3 +1,7 @@
+img {
+  width: 100%;
+}
+
 main {
   margin: 5% 0;
 }
@@ -31,7 +35,7 @@ main {
     margin-top: 20px;
 }
 
-.final-buttons {
+.cocktail-buttons {
   display: flex;
   gap: 1rem;
 }
@@ -59,7 +63,7 @@ main {
       text-align: center;
     }
     
-  .final-buttons {
+  .cocktail-buttons {
     flex-direction: column;
   }
   }
