@@ -13,10 +13,12 @@ const cocktailCard = document.querySelector('.cocktailCard');
 function approval() {
   if (cocktail.approved) {
     console.log("yes");
-    $(".ingredientsList").append(`<img src = "images/approved.png";>`);
+    $(".approval-img").append(`<img src = "images/approved.png";>`);
+    $(".approval-text").append(`<h4>Gary is happy - he's getting tequila in his cocktail!</h4>`);
   } else {
     console.log("no");
-    $(".ingredientsList").append(`<img src = "images/dizzy.png";>`);
+    $(".approval-img").append(`<img src = "images/dizzy.png";>`);
+    $(".approval-text").append(`<h4>Dizzy is happy - no tequila for Gery!</h4>`);
   }
 }
 
@@ -40,21 +42,23 @@ function displayCocktail(drinkId, location) {
 
             // Creating and adding a new HTML element based on the data extracted above
             location.innerHTML = `
-            <div class="card">
+            <section class="row justify-content-center">
+            <figure class="col-12 col-md-6 col-lg-4">
             <img src="${cocktail.strDrinkThumb}" class="card-img-top" alt="${cocktail.strDrink}">
-            <div class="card-body">
-              <h5 class="card-title">${cocktail.strDrink}</h5>
-              <p class="card-text">${cocktail.strInstructions}</p>
-              
-            </div>
-            <div class="cocktail-buttons card-body">
-              <button class="save-drink btn btn-success">Save your cocktail</button>
-              <button class="see-favs btn btn-success">See favourites</button>
-        </div>
+            </figure>
+            <article class="col-12 col-md-6 col-lg-4">
+              <h5>${cocktail.strDrink}</h5>
+              <p>${cocktail.strInstructions}</p>
+              <div class="cocktail-buttons">
+                <button class="save-drink btn btn-success">Save your cocktail</button>
+                <button class="see-favs btn btn-success">See favourites</button>
+              </div>
             <ul class="ingredientsList list-group list-group-flush">
             <li class="list-group-item"><h6>Ingredients:</h6></li>
+            </article>
+
             </ul>
-          </div>`;
+          </section>`;
 
           // Appending <li> elements for ingredients.
           // Using a for-in loop because ingredients lists vary between different cocktails
