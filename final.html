@@ -13,27 +13,35 @@
 </head>
 
 <body>
-    <div class='container-fluid'>
+    <header class='container-fluid'>
         <!-- we'll change the text below to be dynamically updated in javascript to do 'Hello ' + userName + '!'-->
-        <div class='row navbar cocktailName d-flex 
+        <section class='row navbar cocktailName d-flex 
         justify-content-center'>Hello userName!
-        </div>
+        </section>
+    </header>
+    <main class="container">
         <div class="row justify-content-end">
-            <div class="cocktailCard col-12 col-md-6">
+            <div class="approval-text col-12 col-md-4 col-lg-3"></div>
+            <div class="approval-img col-12 col-md-6 col-lg-4"></div>
+        </div>
+        <section class="row">
+            <div class="cocktailCard col-12">
 
             </div>
             <!-- <div class="col-12 col-md-6"></div> -->
-        </div>
+        </section>
+    </main>
+
         <!-- build a modal for fav drinks to pop up with an option to close or click a button to see a recipe -->
 
-        <div id="myModal" class="modal">
+        <section id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Favorite Drinks</h2>
                 <div id="favoritesContainer"></div>
             </div>
-        </div>
-    </div>
+        </section>
+    
 
     <!-- For HTML page to use Bootstrap that uses some Java with CSS-->
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -52,8 +60,8 @@
     <script src="./assets/js/final.js"></script>
     <!-- Link the animation for the page -->
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-    <dotlottie-player src="https://lottie.host/cbbd5bde-4bd0-4e88-9a65-61d5e4bdec6e/6fs9Mouxnz.json"
-        background="transparent" speed="1" style="position:absolute; bottom:100px; width: 500px; height: 500px;" loop
+    <dotlottie-player class="drinks-animation" src="https://lottie.host/cbbd5bde-4bd0-4e88-9a65-61d5e4bdec6e/6fs9Mouxnz.json"
+        background="transparent" speed="1" loop
         autoplay></dotlottie-player>
 </body>
 
