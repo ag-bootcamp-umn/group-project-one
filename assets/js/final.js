@@ -14,11 +14,11 @@ function approval() {
   if (cocktail.approved) {
     console.log("yes");
     $(".approval-img").append(`<img src = "images/approved.png";>`);
-    $(".approval-text").append(`<h4>Gary is happy - he's getting tequila in his cocktail!</h4>`);
+    $(".approval-img").append(`<h4 class="text-success">Gary is happy - he's getting tequila in his cocktail!</h4>`);
   } else {
     console.log("no");
     $(".approval-img").append(`<img src = "images/dizzy.png";>`);
-    $(".approval-text").append(`<h4>Dizzy is happy - no tequila for Gery!</h4>`);
+    $(".approval-img").append(`<h4 class="text-danger">Dizzy is happy - no tequila for Gary!</h4>`);
   }
 }
 
