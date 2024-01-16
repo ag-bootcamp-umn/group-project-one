@@ -6,7 +6,7 @@ const projectCocktailData = JSON.parse(localStorage.getItem('projectCocktail')) 
 
 // Create new SSOT and populate it will saved favorites
 const projectCocktail = {
-  favorites: projectCocktailData.favorites,
+  favorites: projectCocktailData.favorites || [],
   thisSession: {
     userName: '',
     cocktail: {}
