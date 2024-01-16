@@ -3,7 +3,8 @@
 
 // display  userName, drinkID, drinkImage, drinkLink  by pulling them from an array of objects called "favorites" that will be in local storage
 function displayFavDrinks() {
-    const favorites = JSON.parse(localStorage.getItem('projectCocktail')) || [];
+    const projectCocktail = JSON.parse(localStorage.getItem('projectCocktail'));
+    const {favorites} = projectCocktail;
 
     // example of what the array will have in it in order to build the function with the variables we are using
     [
@@ -13,12 +14,6 @@ function displayFavDrinks() {
             strDrink: 'Boston Sidecar',
             strDrinkThumb: 'link to picture',
 
-        },
-        {
-            userName: 'Dizzy',
-            idDrink: 2,
-            strDrink: 'Margarita',
-            strDrinkThumb: 'link to picture',
         },
     ]
     // Check if there are stored favorites
