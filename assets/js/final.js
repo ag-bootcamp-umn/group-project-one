@@ -135,7 +135,7 @@ function displayFavDrinks() {
     // Add Unsave Button
     var unsaveButton = document.createElement('button');
     unsaveButton.textContent = 'Unsave';
-    unsaveButton.classList.add('unsave-drink', 'btn', 'btn-danger');
+    unsaveButton.classList.add('unsave-drink', 'btn', 'btn-danger', 'custom-unsave-btn');
     unsaveButton.dataset.drinkIndex = i; // Store the index of the drink
     favoriteDiv.appendChild(unsaveButton);  
 
