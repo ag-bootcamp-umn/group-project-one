@@ -132,8 +132,22 @@ function displayFavDrinks() {
       favoriteDiv.appendChild(drinkImage);
       favoriteDiv.appendChild(drinkName);
 
+    // Add Unsave Button
+    var unsaveButton = document.createElement('button');
+    unsaveButton.textContent = 'Unsave';
+    unsaveButton.classList.add('unsave-drink', 'btn', 'btn-danger', 'custom-unsave-btn');
+    unsaveButton.dataset.drinkIndex = i; // Store the index of the drink
+    favoriteDiv.appendChild(unsaveButton);  
+
       favoritesContainer.appendChild(favoriteDiv);
   }
+  // Add event listener for Unsave buttons
+  document.querySelectorAll('.unsave-drink').forEach(button => {
+    button.addEventListener('click', function(e) {
+      var drinkIndex = e.target.dataset.drinkIndex;
+      unsaveDrink(drinkIndex);
+    });
+  }); 
 
   // Display the modal
   var modal = document.getElementById('myModal');
@@ -144,4 +158,12 @@ function displayFavDrinks() {
   closeBtn.onclick = function () {
       modal.style.display = 'none';
   };
+}
+
+// Function to unsave a drink
+function unsaveDrink(index) {
+  var projectCocktail = JSON.parse(localStorage.getItem('projectCocktail'));
+  projectCocktail.favorites.splice(index, 1); // Remove the drink from favorites
+  localStorage.setItem('projectCocktail', JSON.stringify(projectCocktail));
+  displayFavDrinks(); // Refresh the favorites list display
 }

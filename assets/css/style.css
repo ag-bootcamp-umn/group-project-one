@@ -149,3 +149,11 @@ main {
   text-decoration: none;
   cursor: pointer;
 }
+
+.custom-unsave-btn {
+  padding: 3px 6px;
+  font-size: 12px;
+  width: 100px;
+  height: 100px;
+
+}
