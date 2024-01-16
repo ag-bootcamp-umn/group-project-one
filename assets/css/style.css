@@ -1,3 +1,11 @@
+img {
+  width: 100%;
+}
+
+main {
+  margin: 5% 0;
+}
+
 .cocktailName {
   background-color: blueviolet;
   color: hotpink;
@@ -27,22 +35,41 @@
   margin-top: 20px;
 }
 
-@media screen and (max-width: 768px) {
+.cocktail-buttons {
+  display: flex;
+  gap: 1rem;
+}
 
-  header,
-  main {
+.drinks-animation {
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    header,
+    main {
+      flex-direction: column;
+    }
+  
+    section {
+      padding-right: 0;
+    }
+  
+    aside {
+      width: 100%;
+      text-align: center;
+    }
+    
+  .cocktail-buttons {
     flex-direction: column;
   }
-
-  section {
-    padding-right: 0;
   }
 
-  aside {
-    width: 100%;
-    text-align: center;
-  }
-}
+
+
 
 .modal {
   display: none;
