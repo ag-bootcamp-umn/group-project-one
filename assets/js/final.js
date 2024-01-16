@@ -10,13 +10,13 @@ const {userName, cocktail} = projectCocktail.thisSession;
 const userNamePlace = document.querySelector('.cocktailName');
 const cocktailCard = document.querySelector('.cocktailCard');
 
-function approval(){
-  if ($('#list').text() === 'Tequila') {
-    console.log('yes')
-    $('.ingredientsList').append(`<img src = "images/approved.png";>`)
+function approval() {
+  if (cocktail.approved) {
+    console.log("yes");
+    $(".ingredientsList").append(`<img src = "images/approved.png";>`);
   } else {
-    console.log('no')
-    $('.ingredientsList').append(`<img src = "images/dizzy.png";>`)
+    console.log("no");
+    $(".ingredientsList").append(`<img src = "images/dizzy.png";>`);
   }
 }
 
@@ -62,6 +62,9 @@ function displayCocktail(drinkId, location) {
             if(key.includes('Ingredient') && cocktailData[key]) {
                 $('.ingredientsList').append(`<li id ='list' class="list-group-item">${cocktailData[key]}</li>`)
             }
+            if(cocktailData[key] === 'Tequila'){
+              cocktail.approved = true
+            }
           }
           approval()
           document.querySelector('.cocktail-buttons').addEventListener('click', function(e) {
@@ -81,15 +84,6 @@ function saveDrink() {
 }
 function seeFavs() {
   console.log('Favs Seen!');
-}
-
-function changeImage() {
-  var image = document.getElementById("base");
-  if ($('#list').text() === 'Tequila') {
-    image.src = "images/approved.png";
-  } else {
-    image.src = "images/dizzy.png";
-  }
 }
 
 // pull the drinkID
@@ -147,5 +141,3 @@ function displayFavDrinks() {
       modal.style.display = 'none';
   };
 }
-
-changeImage("base")
