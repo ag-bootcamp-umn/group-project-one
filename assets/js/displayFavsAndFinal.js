@@ -66,7 +66,7 @@ function displayCocktail(drinkId, location) {
           approval()
           document.querySelector('.cocktail-buttons').addEventListener('click', function(e) {
             if (e.target.matches('.save-drink')) saveDrink();
-            if (e.target.matches('.see-favs')) displayFavDrinks();
+            if (e.target.matches('.see-favs')) seeFavs();
           });
         })
         return;
@@ -92,60 +92,71 @@ function changeImage() {
   }
 }
 
-// pull the drinkID
+changeImage("base")
 
 
 // display  userName, drinkID, drinkImage, drinkLink  by pulling them from an array of objects called "favorites" that will be in local storage
 function displayFavDrinks() {
-  const projectCocktail = JSON.parse(localStorage.getItem('projectCocktail'));
-  const {favorites} = projectCocktail;
-  console.log(favorites)
+    const favorites = JSON.parse(localStorage.getItem('projectCocktail')) || [];
 
+    // example of what the array will have in it in order to build the function with the variables we are using
+    [
+        {
+            userName: 'Katy',
+            idDrink: 1,
+            strDrink: 'Boston Sidecar',
+            strDrinkThumb: 'link to picture',
 
-  
-  // Check if there are stored favorites
-  if (favorites.length === 0) {
-      document.getElementById('favoritesContainer').textContent = 'There are no stored favorites';
-      return;
-  }
+        },
+        {
+            userName: 'Dizzy',
+            idDrink: 2,
+            strDrink: 'Margarita',
+            strDrinkThumb: 'link to picture',
+        },
+    ]
+    // Check if there are stored favorites
+    if (favorites.length === 0) {
+        document.getElementById('favoritesContainer').textContent = 'There are no stored favorites';
+        return;
+    }
 
-  // Create and append elements for each stored favorite
-  var favoritesContainer = document.getElementById('favoritesContainer');
-  favoritesContainer.innerHTML = '';
-  for (var i = 0; i < favorites.length; i++) {
-      var favoriteDiv = document.createElement('div');
-      favoriteDiv.classList.add('favorite');
+    // Create and append elements for each stored favorite
+    var favoritesContainer = document.getElementById('favoritesContainer');
+    for (var i = 0; i < favorites.length; i++) {
+        var favoriteDiv = document.createElement('div');
+        favoriteDiv.classList.add('favorite');
 
-      var userNameP = document.createElement('p');
-      userNameP.textContent = 'User Name: ' + favorites[i].userName;
+        var userNameP = document.createElement('p');
+        userNameP.textContent = 'User Name: ' + favorites[i].userName;
 
-      // var drinkIDP = document.createElement('p');
-      // drinkIDP.textContent = 'Drink ID: ' + favorites[i].idDrink;
+        // var drinkIDP = document.createElement('p');
+        // drinkIDP.textContent = 'Drink ID: ' + favorites[i].idDrink;
 
-      var drinkImage = document.createElement('img');
-      drinkImage.src = favorites[i].cocktail.strDrinkThumb;
-      console.log(favorites[i].cocktail.strDrinkThumb);
-      drinkImage.alt = 'Drink Image';
+        var drinkImage = document.createElement('img');
+        drinkImage.src = favorites[i].strDrinkThumb;
+        drinkImage.alt = 'Drink Image';
 
-      var drinkName = document.createElement('h3');
-    drinkName.textContent = favorites[i].cocktail.strDrink;
+        var drinkName = document.createElement('a');
+        drinkLink.href = favorites[i].strDrink;
+        drinkLink.target = '_blank';
+        drinkLink.textContent = 'Name: ';
 
-      favoriteDiv.appendChild(userNameP);
-      favoriteDiv.appendChild(drinkImage);
-      favoriteDiv.appendChild(drinkName);
+        favoriteDiv.appendChild(userNameP);
+        favoriteDiv.appendChild(drinkIDP);
+        favoriteDiv.appendChild(drinkImage);
+        favoriteDiv.appendChild(drinkLink);
 
-      favoritesContainer.appendChild(favoriteDiv);
-  }
+        favoritesContainer.appendChild(favoriteDiv);
+    }
 
-  // Display the modal
-  var modal = document.getElementById('myModal');
-  modal.style.display = 'block';
+    // Display the modal
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'block';
 
-  // Close the modal when the close button is clicked
-  var closeBtn = document.getElementsByClassName('close')[0];
-  closeBtn.onclick = function () {
-      modal.style.display = 'none';
-  };
+    // Close the modal when the close button is clicked
+    var closeBtn = document.getElementsByClassName('close')[0];
+    closeBtn.onclick = function () {
+        modal.style.display = 'none';
+    };
 }
-
-changeImage("base")
