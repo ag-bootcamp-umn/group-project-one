@@ -10,7 +10,7 @@ const userNamePlace = document.querySelector(".cocktailName");
 const cocktailCard = document.querySelector(".cocktailCard");
 
 function approval() {
-  if ($("#list").text() === "Tequila") {
+  if (cocktail.approved) {
     console.log("yes");
     $(".ingredientsList").append(`<img src = "images/approved.png";>`);
   } else {
@@ -91,7 +91,7 @@ function saveDrink() {
   localStorage.setItem("projectCocktail", JSON.stringify(projectCocktail));
 }
 function seeFavs() {
-  console.log("Favs Seen!");
+  console.log('Favs Seen!');
 }
 
 // pull the drinkID
